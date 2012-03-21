@@ -1,16 +1,13 @@
 #! /usr/bin/python -i
 from copy import copy
 
-PRINTABLE_CHARACTERS = [9,10,13] + range(32,127)
-
 class Freq(object):
-    def __init__(self,charset=PRINTABLE_CHARACTERS):
+    def __init__(self):
         self.diagraph = {}
         self.freq = {}
         self.sorted_freqs = []
         self.heat_map = []
 
-        self.charset = charset
 
     def feed(self,data):
         for ci in xrange(1,len(data)):
