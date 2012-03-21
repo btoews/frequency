@@ -1,12 +1,13 @@
 #! /usr/bin/python -i
 from copy import copy
 
+PRINTABLE_CHARACTERS = [chr(c) for c in [9,10,13] + range(32,127)]
+
 class Freq(object):
     def __init__(self):
         self.diagraph = {}
         self.freq = {}
         self.sorted_freqs = []
-        self.heat_map = []
 
 
     def feed(self,data):
@@ -28,8 +29,12 @@ class Freq(object):
         sorted_by_freq = sorted(self.freq.iteritems(),cmp=lambda x,y:cmp(y[1],x[1]))
         self.sorted_freqs = []
         for c in sorted_by_freq:
-            self.sorted_freqs.append((c[0],sorted(self.diagraph[c[0]].iteritems(),cmp=lambda x,y:cmp(y[1],x[1])))) 
+            chars = map(lambda e:e[0],sorted(self.diagraph[c[0]].iteritems(),cmp=lambda x,y:cmp(y[1],x[1])))
+            for pc in PRINTABLE_CHARACTERS:
+                if pc not in chars:
+                    chars.append(pc)
 
+            self.sorted_freqs.append((c[0],chars))
     
     def __repr__(self):
         return str(self.sorted_freqs)
